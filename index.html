@@ -21,16 +21,24 @@
       Goal city
       <select id="goal-city"></select>
     </label>
+    <label>
+      Algorithm
+      <select id="mode-select">
+        <option value="both" selected>Both (compare)</option>
+        <option value="bfs">Blind Search (BFS) only</option>
+        <option value="astar">Custom Heuristic Search (A*) only</option>
+      </select>
+    </label>
     <button id="run-btn">Run Search</button>
     <span id="status" class="status"></span>
   </section>
 
   <section class="maps">
-    <div class="map-panel">
+    <div class="map-panel" id="bfs-panel">
       <h2>Blind Search — Breadth-First Search</h2>
       <svg id="bfs-map" class="map"></svg>
     </div>
-    <div class="map-panel">
+    <div class="map-panel" id="astar-panel">
       <h2>Heuristic Search — A* (straight-line distance)</h2>
       <svg id="astar-map" class="map"></svg>
     </div>

@@ -1,8 +1,11 @@
 const startSelect = document.getElementById("start-city");
 const goalSelect = document.getElementById("goal-city");
+const modeSelect = document.getElementById("mode-select");
 const runBtn = document.getElementById("run-btn");
 const bfsSvg = document.getElementById("bfs-map");
 const astarSvg = document.getElementById("astar-map");
+const bfsPanel = document.getElementById("bfs-panel");
+const astarPanel = document.getElementById("astar-panel");
 const resultsBody = document.getElementById("results-body");
 const statusEl = document.getElementById("status");
 
@@ -60,33 +63,43 @@ function renderRow(name, result) {
 async function runComparison() {
   const start = startSelect.value;
   const goal = goalSelect.value;
+  const mode = modeSelect.value; // "both" | "bfs" | "astar"
+
+  const runBfs = mode === "both" || mode === "bfs";
+  const runAstar = mode === "both" || mode === "astar";
+  bfsPanel.hidden = !runBfs;
+  astarPanel.hidden = !runAstar;
 
   runBtn.disabled = true;
   statusEl.textContent = `Searching from ${start} to ${goal}...`;
   resultsBody.innerHTML = "";
-  drawBaseMap(bfsSvg);
-  drawBaseMap(astarSvg);
+  if (runBfs) drawBaseMap(bfsSvg);
+  if (runAstar) drawBaseMap(astarSvg);
 
   if (start === goal) {
     statusEl.textContent = "Start and goal are the same city.";
   }
 
-  const bfsResult = breadthFirstSearch(start, goal);
-  const astarResult = aStarSearch(start, goal);
+  const bfsResult = runBfs ? breadthFirstSearch(start, goal) : null;
+  const astarResult = runAstar ? aStarSearch(start, goal) : null;
 
-  await Promise.all([
-    animateExpansion(bfsSvg, bfsResult.expansionOrder, bfsResult.path, start, goal, 220),
-    animateExpansion(astarSvg, astarResult.expansionOrder, astarResult.path, start, goal, 220),
-  ]);
+  const animations = [];
+  if (runBfs) animations.push(animateExpansion(bfsSvg, bfsResult.expansionOrder, bfsResult.path, start, goal, 220));
+  if (runAstar) animations.push(animateExpansion(astarSvg, astarResult.expansionOrder, astarResult.path, start, goal, 220));
+  await Promise.all(animations);
 
-  renderRow("Breadth-First Search (blind)", bfsResult);
-  renderRow("A* Search (heuristic: straight-line distance)", astarResult);
+  if (runBfs) renderRow("Breadth-First Search (blind)", bfsResult);
+  if (runAstar) renderRow("A* Search (heuristic: straight-line distance)", astarResult);
 
-  statusEl.textContent = `Done. BFS expanded ${bfsResult.nodesExpanded} nodes; A* expanded ${astarResult.nodesExpanded} nodes.`;
+  const summaryParts = [];
+  if (runBfs) summaryParts.push(`BFS expanded ${bfsResult.nodesExpanded} nodes`);
+  if (runAstar) summaryParts.push(`A* expanded ${astarResult.nodesExpanded} nodes`);
+  statusEl.textContent = `Done. ${summaryParts.join("; ")}.`;
   runBtn.disabled = false;
 }
 
 runBtn.addEventListener("click", runComparison);
+modeSelect.addEventListener("change", runComparison);
 
 // Run once on load with the defaults so the page isn't empty.
 runComparison();
