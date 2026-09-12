@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Romania Map Pathfinding: Blind vs. Heuristic Search</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Romania Map Pathfinding</h1>
+    <p class="subtitle">Breadth-First Search (blind) vs. A* Search (heuristic: straight-line distance)</p>
+  </header>
+
+  <section class="controls">
+    <label>
+      Start city
+      <select id="start-city"></select>
+    </label>
+    <label>
+      Goal city
+      <select id="goal-city"></select>
+    </label>
+    <button id="run-btn">Run Search</button>
+    <span id="status" class="status"></span>
+  </section>
+
+  <section class="maps">
+    <div class="map-panel">
+      <h2>Blind Search — Breadth-First Search</h2>
+      <svg id="bfs-map" class="map"></svg>
+    </div>
+    <div class="map-panel">
+      <h2>Heuristic Search — A* (straight-line distance)</h2>
+      <svg id="astar-map" class="map"></svg>
+    </div>
+  </section>
+
+  <section class="results">
+    <h2>Comparison</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Algorithm</th>
+          <th>Path</th>
+          <th>Path Cost (km)</th>
+          <th>Nodes Expanded</th>
+          <th>Max Frontier Size (space)</th>
+          <th>Runtime (ms)</th>
+        </tr>
+      </thead>
+      <tbody id="results-body"></tbody>
+    </table>
+  </section>
+
+  <footer>
+    <p>
+      Source code:
+      <a href="https://github.com/YOUR_GITHUB_USERNAME/romania-pathfinding" target="_blank" rel="noopener">
+        GitHub Repository
+      </a>
+    </p>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
