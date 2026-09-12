@@ -80,7 +80,7 @@ async function runComparison() {
     statusEl.textContent = "Start and goal are the same city.";
   }
 
-  const bfsResult = runBfs ? breadthFirstSearch(start, goal) : null;
+  const bfsResult = runBfs ? uniformCostSearch(start, goal) : null;
   const astarResult = runAstar ? aStarSearch(start, goal) : null;
 
   const animations = [];
@@ -88,11 +88,11 @@ async function runComparison() {
   if (runAstar) animations.push(animateExpansion(astarSvg, astarResult.expansionOrder, astarResult.path, start, goal, 220));
   await Promise.all(animations);
 
-  if (runBfs) renderRow("Breadth-First Search (blind)", bfsResult);
+  if (runBfs) renderRow("Uniform-Cost Search (blind)", bfsResult);
   if (runAstar) renderRow("A* Search (heuristic: straight-line distance)", astarResult);
 
   const summaryParts = [];
-  if (runBfs) summaryParts.push(`BFS expanded ${bfsResult.nodesExpanded} nodes`);
+  if (runBfs) summaryParts.push(`UCS expanded ${bfsResult.nodesExpanded} nodes`);
   if (runAstar) summaryParts.push(`A* expanded ${astarResult.nodesExpanded} nodes`);
   statusEl.textContent = `Done. ${summaryParts.join("; ")}.`;
   runBtn.disabled = false;

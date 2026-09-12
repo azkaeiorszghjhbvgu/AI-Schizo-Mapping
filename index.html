@@ -9,7 +9,7 @@
 <body>
   <header>
     <h1>Romania Map Pathfinding</h1>
-    <p class="subtitle">Breadth-First Search (blind) vs. A* Search (heuristic: straight-line distance)</p>
+    <p class="subtitle">Uniform-Cost Search (blind) vs. A* Search (heuristic: straight-line distance)</p>
   </header>
 
   <section class="controls">
@@ -25,8 +25,8 @@
       Algorithm
       <select id="mode-select">
         <option value="both" selected>Both (compare)</option>
-        <option value="bfs">Blind Search (BFS) only</option>
-        <option value="astar">Custom Heuristic Search (A*) only</option>
+        <option value="bfs">Uniform-Cost Search (UCS / Dijkstra's)</option>
+        <option value="astar">A* Search</option>
       </select>
     </label>
     <button id="run-btn">Run Search</button>
@@ -35,7 +35,7 @@
 
   <section class="maps">
     <div class="map-panel" id="bfs-panel">
-      <h2>Blind Search — Breadth-First Search</h2>
+      <h2>Blind Search — Uniform-Cost Search (Dijkstra's)</h2>
       <svg id="bfs-map" class="map"></svg>
     </div>
     <div class="map-panel" id="astar-panel">

@@ -1,8 +1,8 @@
 # Romania Map Pathfinding
 
-A web app comparing a **blind search** (Breadth-First Search) against a **heuristic search**
-(A* with straight-line-distance heuristic) on the classic Romania road map. Any city can be
-chosen as start or goal.
+A web app comparing a **blind search** (Uniform-Cost Search / Dijkstra's) against a **heuristic
+search** (A* with straight-line-distance heuristic) on the classic Romania road map. Any city can
+be chosen as start or goal.
 
 No build step, no dependencies — plain HTML, CSS, and JavaScript.
 
@@ -23,9 +23,9 @@ No build step, no dependencies — plain HTML, CSS, and JavaScript.
 
 | | Blind search | Heuristic search |
 |---|---|---|
-| Algorithm | Breadth-First Search | A* Search |
-| Informed by | Number of edges only | Straight-line distance to goal |
-| Optimal (cost-wise) | No | Yes (admissible heuristic) |
+| Algorithm | Uniform-Cost Search (UCS / Dijkstra's) | A* Search |
+| Informed by | Accumulated path cost only | Path cost + straight-line distance to goal |
+| Optimal (cost-wise) | Yes | Yes (admissible heuristic) |
 | Metrics compared | Path cost, nodes expanded, max frontier size, runtime | Same |
 
 ## Run locally
@@ -42,7 +42,7 @@ then visit http://localhost:8080.
 
 - `js/data.js` — the 20 Romania cities, road distances, and a calibrated straight-line heuristic
   that works for **any** start/goal pair (not just goal = Bucharest).
-- `js/search.js` — `breadthFirstSearch` (blind/uninformed) and `aStarSearch` (informed, uses the
+- `js/search.js` — `uniformCostSearch` (blind/uninformed) and `aStarSearch` (informed, uses the
   heuristic). Both return path, cost, nodes expanded, max frontier size, and runtime.
 - `js/map.js` — SVG rendering of the map and path/visited-node highlighting.
 - `js/app.js` — wires up the UI, runs both algorithms, animates the search, and renders the

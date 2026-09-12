@@ -1,5 +1,5 @@
 // Two search strategies over the Romania road-map graph:
-//  1) Breadth-First Search - blind/uninformed, expands by number of edges (not cost-aware)
+//  1) Uniform-Cost Search (UCS / Dijkstra's) - blind/uninformed, expands by lowest path cost so far
 //  2) A* Search - informed, uses the straight-line-distance heuristic (admissible & consistent)
 
 function reconstructPath(cameFrom, goal) {
@@ -22,45 +22,49 @@ function pathCost(path) {
   return cost;
 }
 
-function breadthFirstSearch(start, goal) {
+function uniformCostSearch(start, goal) {
   const t0 = performance.now();
-  const frontier = [start];
+  // frontier entries: { node, g } - blind: ordered only by accumulated path cost, no heuristic
+  const frontier = [{ node: start, g: 0 }];
   const cameFrom = new Map();
-  const visited = new Set([start]);
+  const bestG = new Map([[start, 0]]);
+  const closed = new Set();
   const expansionOrder = [];
   let maxFrontierSize = 1;
   let nodesExpanded = 0;
 
-  if (start === goal) {
-    return finishResult({
-      found: true, path: [start], cameFrom, expansionOrder, nodesExpanded: 0,
-      maxFrontierSize: 1, visitedCount: 1, t0,
-    });
-  }
-
   while (frontier.length > 0) {
     maxFrontierSize = Math.max(maxFrontierSize, frontier.length);
-    const node = frontier.shift();
+    // pick lowest-g node (linear scan fine for 20-node graph)
+    let bestIdx = 0;
+    for (let i = 1; i < frontier.length; i++) {
+      if (frontier[i].g < frontier[bestIdx].g) bestIdx = i;
+    }
+    const { node, g } = frontier.splice(bestIdx, 1)[0];
+
+    if (closed.has(node)) continue;
+    closed.add(node);
     nodesExpanded++;
     expansionOrder.push(node);
 
-    for (const { to } of GRAPH[node]) {
-      if (!visited.has(to)) {
-        visited.add(to);
+    if (node === goal) {
+      return finishResult({
+        found: true, path: reconstructPath(cameFrom, goal), cameFrom,
+        expansionOrder, nodesExpanded, maxFrontierSize, visitedCount: closed.size + frontier.length, t0,
+      });
+    }
+
+    for (const { to, cost } of GRAPH[node]) {
+      const tentativeG = g + cost;
+      if (!bestG.has(to) || tentativeG < bestG.get(to)) {
+        bestG.set(to, tentativeG);
         cameFrom.set(to, node);
-        if (to === goal) {
-          return finishResult({
-            found: true, path: reconstructPath(cameFrom, goal), cameFrom,
-            expansionOrder, nodesExpanded, maxFrontierSize: Math.max(maxFrontierSize, frontier.length + 1),
-            visitedCount: visited.size, t0,
-          });
-        }
-        frontier.push(to);
+        frontier.push({ node: to, g: tentativeG });
       }
     }
   }
 
-  return finishResult({ found: false, path: null, cameFrom, expansionOrder, nodesExpanded, maxFrontierSize, visitedCount: visited.size, t0 });
+  return finishResult({ found: false, path: null, cameFrom, expansionOrder, nodesExpanded, maxFrontierSize, visitedCount: closed.size, t0 });
 }
 
 function aStarSearch(start, goal) {
