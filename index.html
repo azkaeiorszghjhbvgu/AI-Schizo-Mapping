@@ -3,63 +3,60 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Romania Map Pathfinding: Blind vs. Heuristic Search</title>
+  <title>Romania Map Pathfinding — Home</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header>
-    <a class="home-link" href="home.html">&larr; Home</a>
     <h1>Romania Map Pathfinding</h1>
-    <p class="subtitle">Uniform-Cost Search (blind) vs. A* Search (heuristic: straight-line distance)</p>
+    <p class="subtitle">Blind Search vs. Heuristic Search, visualized side by side</p>
   </header>
 
-  <section class="controls">
-    <label>
-      Start city
-      <select id="start-city"></select>
-    </label>
-    <label>
-      Goal city
-      <select id="goal-city"></select>
-    </label>
-    <label>
-      Algorithm
-      <select id="mode-select">
-        <option value="both" selected>Both (compare)</option>
-        <option value="bfs">Uniform-Cost Search (UCS / Dijkstra's)</option>
-        <option value="astar">A* Search</option>
-      </select>
-    </label>
-    <button id="run-btn">Run Search</button>
-    <span id="status" class="status"></span>
-  </section>
-
-  <section class="maps">
-    <div class="map-panel" id="bfs-panel">
-      <h2>Blind Search — Uniform-Cost Search (Dijkstra's)</h2>
-      <svg id="bfs-map" class="map"></svg>
+  <section class="intro">
+    <div class="intro-card">
+      <h2>What is this?</h2>
+      <p>
+        This app solves the classic <strong>Romania map</strong> pathfinding
+        problem from AI search theory: given a start city and a goal city,
+        find a route between them on a weighted road-distance graph. It runs
+        two search algorithms side by side so you can see how a
+        <strong>blind (uninformed) search</strong> compares to a
+        <strong>heuristic (informed) search</strong> on the same problem.
+      </p>
     </div>
-    <div class="map-panel" id="astar-panel">
-      <h2>Heuristic Search — A* (straight-line distance)</h2>
-      <svg id="astar-map" class="map"></svg>
-    </div>
-  </section>
 
-  <section class="results">
-    <h2>Comparison</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Algorithm</th>
-          <th>Path</th>
-          <th>Path Cost (km)</th>
-          <th>Nodes Expanded</th>
-          <th>Max Frontier Size (space)</th>
-          <th>Runtime (ms)</th>
-        </tr>
-      </thead>
-      <tbody id="results-body"></tbody>
-    </table>
+    <div class="intro-grid">
+      <div class="intro-card">
+        <h3>Blind Search</h3>
+        <p><strong>Uniform-Cost Search</strong> (Dijkstra's algorithm)</p>
+        <p>
+          Expands nodes purely by accumulated path cost from the start,
+          with no knowledge of where the goal is.
+        </p>
+      </div>
+      <div class="intro-card">
+        <h3>Heuristic Search</h3>
+        <p><strong>A* Search</strong></p>
+        <p>
+          Expands nodes using path cost <em>plus</em> a straight-line-distance
+          estimate to the goal, guiding the search more directly.
+        </p>
+      </div>
+    </div>
+
+    <div class="intro-card">
+      <h3>What you'll see</h3>
+      <ul>
+        <li>Two live maps animating each algorithm's node expansion</li>
+        <li>The final path highlighted on each map</li>
+        <li>A comparison table of path cost, nodes expanded, max frontier size (space), and runtime</li>
+      </ul>
+      <p>Pick any start and goal city, choose an algorithm (or compare both), and run the search.</p>
+    </div>
+
+    <div class="intro-cta">
+      <a class="cta-button" href="app.html">Launch the App</a>
+    </div>
   </section>
 
   <footer>
@@ -70,10 +67,5 @@
       </a>
     </p>
   </footer>
-
-  <script src="js/data.js"></script>
-  <script src="js/search.js"></script>
-  <script src="js/map.js"></script>
-  <script src="js/app.js"></script>
 </body>
 </html>
