@@ -1,11 +1,5 @@
 # Romania Map Pathfinding
 
-A web app comparing a **blind search** (Uniform-Cost Search / Dijkstra's) against a **heuristic
-search** (A* with straight-line-distance heuristic) on the classic Romania road map. Any city can
-be chosen as start or goal.
-
-No build step, no dependencies — plain HTML, CSS, and JavaScript.
-
 ## Assignment Brief
 
 - **Problem**: The Romania-Map Pathfinding problem.
