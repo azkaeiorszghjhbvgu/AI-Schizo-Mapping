@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Romania Map Pathfinding — Home</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Romania Map Pathfinding</h1>
+    <p class="subtitle">Blind Search vs. Heuristic Search, visualized side by side</p>
+  </header>
+
+  <section class="intro">
+    <div class="intro-card">
+      <h2>What is this?</h2>
+      <p>
+        This app solves the classic <strong>Romania map</strong> pathfinding
+        problem from AI search theory: given a start city and a goal city,
+        find a route between them on a weighted road-distance graph. It runs
+        two search algorithms side by side so you can see how a
+        <strong>blind (uninformed) search</strong> compares to a
+        <strong>heuristic (informed) search</strong> on the same problem.
+      </p>
+    </div>
+
+    <div class="intro-grid">
+      <div class="intro-card">
+        <h3>Blind Search</h3>
+        <p><strong>Uniform-Cost Search</strong> (Dijkstra's algorithm)</p>
+        <p>
+          Expands nodes purely by accumulated path cost from the start,
+          with no knowledge of where the goal is.
+        </p>
+      </div>
+      <div class="intro-card">
+        <h3>Heuristic Search</h3>
+        <p><strong>A* Search</strong></p>
+        <p>
+          Expands nodes using path cost <em>plus</em> a straight-line-distance
+          estimate to the goal, guiding the search more directly.
+        </p>
+      </div>
+    </div>
+
+    <div class="intro-card">
+      <h3>What you'll see</h3>
+      <ul>
+        <li>Two live maps animating each algorithm's node expansion</li>
+        <li>The final path highlighted on each map</li>
+        <li>A comparison table of path cost, nodes expanded, max frontier size (space), and runtime</li>
+      </ul>
+      <p>Pick any start and goal city, choose an algorithm (or compare both), and run the search.</p>
+    </div>
+
+    <div class="intro-cta">
+      <a class="cta-button" href="index.html">Launch the App</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>
+      Source code:
+      <a href="https://github.com/azkaeiorszghjhbvgu/AI-Schizo-Mapping" rel="noopener">
+        GitHub Repository
+      </a>
+    </p>
+  </footer>
+</body>
+</html>
