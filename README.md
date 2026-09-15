@@ -32,12 +32,6 @@ python -m http.server 8080
 
 then visit http://localhost:8080.
 
-## Deploy
+## Actual Deployed
 
-Any static host works since there's no build step:
-
-- **GitHub Pages**: push this folder to a GitHub repo, then enable Pages (Settings → Pages →
-  deploy from `main` branch, root folder).
-- **Vercel/Netlify**: import the repo, leave build command empty, output directory = `/`.
-
-After deploying, update the GitHub link in the footer of `index.html` to point at your repo.
+https://schizo-mapping.netlify.app
