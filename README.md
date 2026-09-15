@@ -38,6 +38,17 @@ python -m http.server 8080
 
 then visit http://localhost:8080.
 
+### Using Docker
+
+With Docker installed and running:
+
+```
+docker build -t ai-schizo-mapping .
+docker run -d -p 8080:80 ai-schizo-mapping
+```
+
+then visit http://localhost:8080.
+
 ## Deploy
 
 Any static host works since there's no build step:
